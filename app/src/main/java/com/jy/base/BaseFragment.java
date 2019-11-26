@@ -18,6 +18,10 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     protected  P mPresenter;
 
 
+
+
+
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -39,6 +43,11 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
 
     }
 
+
+    public boolean isAddBackStack(){
+        return true;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -49,7 +58,18 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     }
 
 
+    public Action getAction(){
+        return Action.Hide;
+    }
+
+
     protected abstract int getLayoutId();
 
 
+
+
+    public enum Action{
+
+        Remove,Detach,Hide
+    }
 }
