@@ -5,19 +5,47 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+
+
+    signingConfigs {
+        release {
+            storeFile file('/Users/taofu/Downloads/a_git/1904/1904')
+            storePassword '123456'
+            keyAlias = 'key1'
+            keyPassword '123456'
+        }
+
+        release2 {
+            // signingConfig signingConfigs.release 添加到release
+            keyAlias 'jiandao12'
+            keyPassword 'jiandao123'
+            storeFile file('jiandao.jks')
+            storePassword 'jiandao123'
+        }
+    }
+
+
+
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.jy"
+        applicationId "com.seetaoism"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug{
+            signingConfig signingConfigs.release2
+            minifyEnabled false
         }
     }
 
@@ -58,6 +86,7 @@ dependencies {
 
     implementation "io.reactivex.rxjava2:rxjava:2.2.9"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation project(path: ':libumeng')
 
     // rxjava --- end ----
 
