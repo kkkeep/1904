@@ -1,3 +1,6 @@
+
+https://developer.umeng.com/docs/66632/detail/66639#h3--
+
 1. 自己去友盟，微信，qq，微博等平台注册账号，拿到各种key，appId
 
    > 注意： 注册账号的时候，包名（applicationId）和签名信息一定不要搞错了。签名信息一定要用你自己准备用来打包的那个签名文件里面的签名信息(MD5)
