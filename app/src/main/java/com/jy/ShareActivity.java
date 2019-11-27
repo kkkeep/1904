@@ -60,6 +60,9 @@ public class ShareActivity extends AppCompatActivity implements UMShareListener 
                         .setCallback(this)//回调监听器
                         .share();
 
+                // 带面板分享
+               /* new ShareAction(this).withText("hello").setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
+                        .setCallback(this).open();*/
                 break;
             }
             case R.id.share_btn_qq: {
