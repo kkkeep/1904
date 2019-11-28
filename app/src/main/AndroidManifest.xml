@@ -14,13 +14,18 @@
             android:usesCleartextTraffic="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ShareActivity">
+
+
+
+
+        <activity android:name=".map.MapActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+    <!--    <activity android:name=".map.MapActivity" />-->
 
     </application>
 

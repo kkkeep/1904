@@ -1,1 +1,7 @@
 include ':app', ':libumeng'
+include ':libamap'
+
+
+// 如果model 不在当前工程目录下，需要用这种方式指定model
+//include 'libamap'
+//project(':libamap').projectDir = new File('../**/**/libamap')
