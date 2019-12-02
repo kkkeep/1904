@@ -1,8 +1,10 @@
 package com.jy;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -31,4 +33,12 @@ public class MainActivity extends AppCompatActivity {
         FragmentUtils.addOrShowFragment(getSupportFragmentManager(), FragmentA.class, R.id.main_fragment_container, null);
 
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
+    }
+
+
 }

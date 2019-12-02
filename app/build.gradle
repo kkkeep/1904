@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'org.greenrobot.greendao'
+
 android {
 
 
@@ -97,7 +99,20 @@ dependencies {
     implementation project(path: ':libumeng')
    implementation project(path: ':libamap')
 
+
     // rxjava --- end ----
+
+
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    implementation "com.github.bumptech.glide:glide:4.8.0"
+    implementation "org.greenrobot:greendao:3.2.2"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.8.0"
+
+
+
 
 
 

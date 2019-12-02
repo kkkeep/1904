@@ -5,7 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <application android:name=".MyApplication"
+    <application android:name=".kaoshi.KaoShiApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -18,7 +18,7 @@
 
 
 
-        <activity android:name=".map.MapActivity">
+        <activity android:name=".kaoshi.KaoShiActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
