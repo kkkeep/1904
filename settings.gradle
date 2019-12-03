@@ -1,4 +1,4 @@
-include ':app', ':libumeng'
+include ':app', ':libumeng', ':libeaseim'
 include ':libamap'
 
 

@@ -34,7 +34,7 @@ android {
 
     defaultConfig {
         applicationId "com.seetaoism"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -62,6 +62,11 @@ android {
             java.srcDirs = ['src/designMode/java', 'src/main/java','src/share/java','src/map/java']
             res.srcDirs = ['src/designMode/res', 'src/main/res','src/share/res','src/map/res']
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
 }
@@ -97,7 +102,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.2.9"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
     implementation project(path: ':libumeng')
-   implementation project(path: ':libamap')
+    implementation project(path: ':libamap')
 
 
     // rxjava --- end ----
@@ -110,10 +115,7 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:4.8.0"
     implementation "org.greenrobot:greendao:3.2.2"
     annotationProcessor "com.github.bumptech.glide:compiler:4.8.0"
-
-
-
-
+    implementation project(path: ':libeaseim')
 
 
 }

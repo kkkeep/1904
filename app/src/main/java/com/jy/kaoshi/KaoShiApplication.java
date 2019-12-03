@@ -1,9 +1,11 @@
 package com.jy.kaoshi;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.jy.kaoshi.entiry.DaoMaster;
 import com.jy.kaoshi.entiry.DaoSession;
+import com.jy.libeaseim.EaseUtil;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -19,8 +21,9 @@ public class KaoShiApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Log.d("Test", "----------------------" + this.hashCode());
         application = this;
+        EaseUtil.init(this);
     }
 
 

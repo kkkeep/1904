@@ -1,5 +1,6 @@
 package com.jy.kaoshi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,9 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.jy.R;
 import com.jy.kaoshi.view.collect.CollectFragment;
 import com.jy.kaoshi.view.home.HomeFragment;
+import com.jy.map.MapActivity;
 
 /*
  * created by Cherry on 2019-12-02
@@ -48,6 +52,18 @@ public class KaoShiActivity extends AppCompatActivity {
     public void onClick(View view){
         if(view.getId() == R.id.kaoshi_btn_home){
             showCurrentAndHideOther(mHomeFragment, mCollectFragment);
+            new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        EMClient.getInstance().createAccount("test2", "123456");
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+
+            //startActivity(new Intent(this, MapActivity.class));
         }else{
             showCurrentAndHideOther(mCollectFragment,mHomeFragment);
         }
