@@ -59,8 +59,8 @@ android {
 
     sourceSets {
         main {
-            java.srcDirs = ['src/designMode/java', 'src/main/java','src/share/java','src/map/java']
-            res.srcDirs = ['src/designMode/res', 'src/main/res','src/share/res','src/map/res']
+            java.srcDirs = ['src/designMode/java', 'src/main/java','src/share/java','src/map/java','src/easeim/java']
+            res.srcDirs = ['src/designMode/res', 'src/main/res','src/share/res','src/map/res','src/easeim/res']
         }
     }
 

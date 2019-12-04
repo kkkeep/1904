@@ -18,13 +18,16 @@
 
 
 
-        <activity android:name=".kaoshi.KaoShiActivity">
+        <activity android:name=".easeim.EaseSplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".easeim.LoginRegisterActivity"/>
+        <activity android:name=".easeim.EaseHomeActivity"/>
        <activity android:name=".map.MapActivity"
                android:process=":map"
                />

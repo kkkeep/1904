@@ -52,16 +52,6 @@ public class KaoShiActivity extends AppCompatActivity {
     public void onClick(View view){
         if(view.getId() == R.id.kaoshi_btn_home){
             showCurrentAndHideOther(mHomeFragment, mCollectFragment);
-            new Thread(){
-                @Override
-                public void run() {
-                    try {
-                        EMClient.getInstance().createAccount("test2", "123456");
-                    } catch (HyphenateException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
 
             //startActivity(new Intent(this, MapActivity.class));
         }else{
