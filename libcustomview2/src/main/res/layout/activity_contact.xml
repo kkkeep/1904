@@ -12,16 +12,17 @@
             android:id="@+id/slider_view"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            slider:sliderTextSize="10dp"
-            slider:sliderTextColor="#000000"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:sliderCharBottomMargin="3dp"
             app:sliderCharLeftMargin="5dp"
             app:sliderCharRightMargin="5dp"
             app:sliderCharTopMargin="3dp"
-            app:sliderCharBottomMargin="3dp"
-            android:background="@drawable/slider_bg"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            slider:sliderTextColor="#000000"
+            slider:sliderTextSize="10dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
