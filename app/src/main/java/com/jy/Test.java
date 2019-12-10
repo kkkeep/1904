@@ -5,29 +5,41 @@ package com.jy;
  **/
 public class Test {
 
-    public static void main(String args[]) {
-        Parent parent = new Child();
-        parent.print();
+    public static void main(String args[]) throws InterruptedException {
+
+
+
+      Thread thread =   new Thread(){
+            @Override
+            public void run() {
+
+
+
+                for (int i = 0; i < 10; i++) {
+                    System.out.println("thread " + Thread.currentThread().getName() + " print " + i);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+        };
+
+        thread.setDaemon(true);
+
+        thread.start();
+
+        System.out.println("thread " + Thread.currentThread().getName() + " 准备睡觉");
+
+
+        Thread.sleep(10000);
+
+        System.out.println("thread " + Thread.currentThread().getName() + " 即将结束");
+
     }
 
 
-    public static abstract class Parent {
-
-        protected void print() {
-            sayHi();
-        }
-
-        protected void sayHi() {
-            System.out.println("i am a old man");
-        }
-
-    }
-
-    public static class Child extends Parent {
-        @Override
-        protected void sayHi() {
-            super.sayHi();
-            System.out.println("i am a little cute girl");
-        }
-    }
 }

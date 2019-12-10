@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:slider="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+
+    <com.jy.libcustomview2.SliderView
+            android:id="@+id/slider_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            slider:sliderTextSize="10dp"
+            slider:sliderTextColor="#000000"
+            app:sliderCharLeftMargin="5dp"
+            app:sliderCharRightMargin="5dp"
+            app:sliderCharTopMargin="3dp"
+            app:sliderCharBottomMargin="3dp"
+            android:background="@drawable/slider_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

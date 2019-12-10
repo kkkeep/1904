@@ -18,7 +18,7 @@
 
 
 
-        <activity android:name=".easeim.EaseSplashActivity">
+        <activity android:name=".libcustomview2.ActivityContact">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

@@ -1,5 +1,6 @@
-include ':app', ':libumeng', ':libeaseim'
+include ':app', ':libumeng', ':libeaseim', ':libcustomview2'
 include ':libamap'
+include ':libcustomview'
 
 
 // 如果model 不在当前工程目录下，需要用这种方式指定model

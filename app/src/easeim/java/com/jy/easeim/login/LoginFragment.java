@@ -14,6 +14,8 @@ import com.jy.easeim.EaseHomeActivity;
 import com.jy.easeim.EaseSplashActivity;
 import com.jy.easeim.LoginRegisterContract;
 
+import java.util.logging.Handler;
+
 /*
  * created by Cherry on 2019-12-04
  **/

@@ -1,6 +1,9 @@
 package com.jy;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PersistableBundle;
 import android.util.Log;
 
@@ -28,6 +31,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+
+        getWindow().getDecorView().post(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+
+
+
 
 
         FragmentUtils.addOrShowFragment(getSupportFragmentManager(), FragmentA.class, R.id.main_fragment_container, null);

@@ -1,0 +1,16 @@
+<resources>
+
+ <declare-styleable name="SliderView">
+     <attr name="sliderTextSize" format="dimension|reference"/>
+     <attr name="sliderTextColor" format="color|reference"/>
+     <attr name="sliderCharLeftMargin" format="dimension|reference"/>
+     <attr name="sliderCharRightMargin" format="dimension|reference"/>
+     <attr name="sliderCharTopMargin" format="dimension|reference"/>
+     <attr name="sliderCharBottomMargin" format="dimension|reference"/>
+     <attr name="sliderCharMargin" format="dimension|reference"/>
+ </declare-styleable>
+
+
+
+
+</resources>
