@@ -1,17 +1,24 @@
 package com.jy.libcustomview2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,6 +32,11 @@ import java.util.ArrayList;
 public class SliderView extends View {
 
     private static final String[] CHARS = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"};
+
+    private WindowManager mWindowManager;
+    private TextView mPopView;
+    private WindowManager.LayoutParams mWindowParams;
+
     private Paint mPaint;
     private Paint mStrokePaint;
     private Paint mBgPaint;
@@ -49,11 +61,13 @@ public class SliderView extends View {
     private int mHeight;
     private int mTextColor;
     private int mGridHeight;
-
+    private int mLocationInAppY;// 我们滑动条在 app 窗口（非屏幕）中的位置
     private float mStrokeWidth;
 
 
     private boolean isSetWH = false;
+
+    private boolean isShowPopView;
 
 
     public SliderView(Context context) {
@@ -115,20 +129,14 @@ public class SliderView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        ///super.onDraw(canvas);
-
-        // canvas.drawColor(Color.GRAY);
-
-
-
-        //}
 
         canvas.drawRoundRect(mStrokeRect, mStrokeRect.width() / 2, mStrokeRect.width() / 2, mStrokePaint);
         canvas.drawRoundRect(mFillRect, mFillRect.width() / 2, mFillRect.width() / 2, mBgPaint);
 
 
+
         for (Char aChar : mChars) {
-            if(aChar.isSelect){
+            if (aChar.isSelect) {
                 canvas.drawOval(aChar.getSelectRectF(), mSelectedCharBgPaint);
             }
             canvas.drawText(aChar.value, aChar.x, aChar.y, mPaint);
@@ -136,48 +144,51 @@ public class SliderView extends View {
         }
 
 
-
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        Log.d("Test", "touch " + event.getAction() + " x = " + event.getX()  + " y = " + event.getY());
-        switch (event.getAction()){
+        Log.d("Test", "touch " + event.getAction() + " x = " + event.getX() + " y = " + event.getY());
+        switch (event.getAction()) {
 
-            case MotionEvent.ACTION_DOWN:{
+            case MotionEvent.ACTION_DOWN: {
                 Char value = getValue(event.getX(), event.getY());
-                if(mPreChar != null){
+                if (mPreChar != null) {
                     mPreChar.isSelect = false;
                 }
                 mPreChar = value;
 
-                if(value != null){
+                if (value != null) {
+                    showOrUpdatePopView(value);
                     invalidate();
                 }
                 break;
             }
 
-            case MotionEvent.ACTION_MOVE:{
+            case MotionEvent.ACTION_MOVE: {
 
                 Char value = getValue(event.getX(), event.getY());
-                if(value != null && value != mPreChar){
-                    if(mPreChar != null){
+                if (value != null && value != mPreChar) {
+                    if (mPreChar != null) {
                         mPreChar.isSelect = false;
                     }
                     mPreChar = value;
+                    showOrUpdatePopView(value);
                     invalidate();
                 }
 
                 break;
             }
 
-            case MotionEvent.ACTION_UP:{
+            case MotionEvent.ACTION_UP: {
 
-                if(mPreChar != null){
+                if (mPreChar != null) {
                     mPreChar.isSelect = false;
                     mPreChar = null;
                 }
+                getHandler().removeCallbacks(removePopViewTask);
+                getHandler().postDelayed(removePopViewTask, 200);
                 invalidate();
 
                 break;
@@ -188,9 +199,72 @@ public class SliderView extends View {
         return true;
     }
 
+    private void showOrUpdatePopView(Char aChar) {
+
+        Log.d("Test", "show");
+        if (mWindowManager == null) {
+            mWindowManager = ((Activity) getContext()).getWindowManager();
+
+            mWindowParams = new WindowManager.LayoutParams();
+            mWindowParams.type = WindowManager.LayoutParams.TYPE_APPLICATION;     // 提示类型,重要
+            mWindowParams.format = PixelFormat.RGBA_8888;
+            mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE; // 不能抢占聚焦点
+            mWindowParams.flags = mWindowParams.flags | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS; // 排版不受限制
+            mWindowParams.gravity = Gravity.LEFT | Gravity.TOP;   //调整悬浮窗口至左上角
+
+            int w = dp2px(getContext(), 60);
+
+
+            mWindowParams.width = w;
+            mWindowParams.height = w;
+
+            mWindowParams.x = getLeft() - 2 * w;
+        }
+
+        if (mPopView == null) {
+            mPopView = new TextView(getContext());
+            mPopView.setBackgroundColor(Color.BLACK);
+            mPopView.setAlpha(0.5f);
+            mPopView.setGravity(Gravity.CENTER);
+            mPopView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 40);
+            mPopView.setTextColor(Color.WHITE);
+        }
+
+
+        if (!isShowPopView) {
+            mWindowManager.addView(mPopView, mWindowParams);
+            isShowPopView = true;
+        }
+
+
+        mPopView.setText(aChar.value);
+
+        mWindowParams.y = (int) aChar.y + mLocationInAppY - (mWindowParams.width / 2);
+
+        mWindowManager.updateViewLayout(mPopView, mWindowParams);
+
+    }
+
+
+    private void removePopView() {
+        Log.d("Test", "remove");
+        if (isShowPopView) {
+            mWindowManager.removeView(mPopView);
+            isShowPopView = false;
+        }
+    }
+
+
+    private Runnable removePopViewTask = new Runnable() {
+        @Override
+        public void run() {
+            removePopView();
+        }
+    };
 
     /**
      * 获取 down 和 move 的点在 27个格子中对应的 字母
+     *
      * @param x
      * @param y
      * @return
@@ -209,6 +283,7 @@ public class SliderView extends View {
         }
         return value;
     }
+
     private void init() {
 
         mPaint = new Paint();
@@ -240,9 +315,6 @@ public class SliderView extends View {
         mSelectedCharBgPaint.setColor(Color.RED);
 
 
-
-
-
         mCharWidth = mPaint.measureText("W"); // 计算文字的宽度
 
         mWidth = (int) (mMarginLeft + mCharWidth + mMarginRight);
@@ -268,8 +340,8 @@ public class SliderView extends View {
 
         mFillRect = new RectF();
         mFillRect.left = mStrokeRect.left + mStrokeWidth / 2;
-        mFillRect.top =  mStrokeRect.top+ mStrokeWidth / 2;
-        mFillRect.right =   mStrokeRect.right - mStrokeWidth / 2;
+        mFillRect.top = mStrokeRect.top + mStrokeWidth / 2;
+        mFillRect.right = mStrokeRect.right - mStrokeWidth / 2;
         mFillRect.bottom = mStrokeRect.bottom - mStrokeWidth / 2;
 
         //mFillRect = mStrokeRect;
@@ -280,8 +352,31 @@ public class SliderView extends View {
             mChars.add(aChar);
         }
 
+
+        getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                int[] location = new int[2];
+                getLocationInWindow(location);
+                mLocationInAppY = location[1] - getStatusBarHeight();
+                getViewTreeObserver().removeOnPreDrawListener(this);
+
+                return false;
+            }
+        });
+
     }
 
+    /**
+     * 获取状态栏的高度
+     *
+     * @return
+     */
+    private int getStatusBarHeight() {
+        Rect rectangle = new Rect();
+        ((Activity) getContext()).getWindow().getDecorView().getWindowVisibleDisplayFrame(rectangle);
+        return rectangle.top;
+    }
 
     private class Char {
         String value;
@@ -306,17 +401,17 @@ public class SliderView extends View {
             Log.d("Test", value + " x = " + x + " y = " + rect.bottom);
         }
 
-        public RectF getSelectRectF(){
-            if(select == null){
-                int offset = (int) Math.min(mStrokeWidth * 4,rect.width() / 10);
+        public RectF getSelectRectF() {
+            if (select == null) {
+                int offset = (int) Math.min(mStrokeWidth * 4, rect.width() / 10);
 
                 int bottom = (int) (rect.bottom - offset + mCharHeight * 0.20);
 
-                if(position == CHARS.length -1){
+                if (position == CHARS.length - 1) {
                     bottom = (int) (rect.bottom - offset);
                 }
 
-                select = new RectF(rect.left + offset,rect.top + offset,rect.right - offset,bottom );
+                select = new RectF(rect.left + offset, rect.top + offset, rect.right - offset, bottom);
 
             }
 
@@ -328,6 +423,7 @@ public class SliderView extends View {
 
 
     private static int dp2px(Context context, float dp) {
+
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
     }

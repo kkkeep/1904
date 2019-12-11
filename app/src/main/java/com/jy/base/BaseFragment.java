@@ -90,8 +90,6 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     protected abstract int getLayoutId();
 
 
-
-
     public enum Action{
 
         Remove,Detach,Hide
