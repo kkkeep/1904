@@ -68,9 +68,7 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         Toast.makeText(getContext(), sId, Toast.LENGTH_LONG).show();
     }
 
-    public boolean isAddBackStack(){
-        return true;
-    }
+
 
     @Override
     public void onDestroyView() {
@@ -81,17 +79,19 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
 
     }
 
-
+    public boolean isAddBackStack(){
+        return true;
+    }
     public Action getAction(){
         return Action.Hide;
     }
-
-
-    protected abstract int getLayoutId();
-
 
     public enum Action{
 
         Remove,Detach,Hide
     }
+    protected abstract int getLayoutId();
+
+
+
 }

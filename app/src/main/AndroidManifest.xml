@@ -18,7 +18,7 @@
 
 
 
-        <activity android:name=".libcustomview2.ActivityContact">
+        <activity android:name=".kaoshi2.KoaShiActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

@@ -3,11 +3,13 @@ package com.jy.data.ok;
 import com.jy.data.entity.HttpResult;
 import com.jy.data.entity.VideoData;
 import com.jy.kaoshi.KaoShiData;
+import com.jy.kaoshi2.KaoShiBean;
 
 import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
@@ -24,5 +26,11 @@ public interface ApiService {
     //请求视频列表
     @GET("http://gank.io/api/data/福利/20/1")
     Observable<KaoShiData> getKaoShiData();
+
+
+
+    @GET("app/v_1_1/article/recommendlist")
+    Observable<KaoShiBean> getNews(@QueryMap Map<String,String> params);
+
 
 }
